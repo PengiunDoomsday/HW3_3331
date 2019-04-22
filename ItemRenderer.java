@@ -16,12 +16,12 @@ public class ItemRenderer extends JLabel implements ListCellRenderer<Item>{
        
 		
 		if (isSelected) {
-            setBackground(list.getSelectionBackground());
-            setForeground(list.getSelectionForeground());
-        } else {
-            setBackground(list.getBackground());
-            setForeground(list.getForeground());
-        }
+            		setBackground(list.getSelectionBackground());
+            		setForeground(list.getSelectionForeground());
+       		} else {
+            		setBackground(list.getBackground());
+           		setForeground(list.getForeground());
+       		}
 		return itemView;
 	}
 	
