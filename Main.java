@@ -140,30 +140,71 @@ public class Main extends JFrame {
 		add(msgBar, BorderLayout.SOUTH);
 	}
 	
+	ImageIcon checkIcon = new ImageIcon(Main.class.getResource("/image/blue check.png"));
+        ImageIcon addIcon = new ImageIcon(Main.class.getResource("/image/blue +.png"));
+        ImageIcon searchIcon = new ImageIcon(Main.class.getResource("/image/blue search.png"));
+        ImageIcon firstIcon = new ImageIcon(Main.class.getResource("/image/blue back.png"));
+        ImageIcon backIcon = new ImageIcon(Main.class.getResource("/image/blue forward.png"));
+        ImageIcon selectedIcon = new ImageIcon(Main.class.getResource("/image/green check.png"));
+        ImageIcon webIcon = new ImageIcon(Main.class.getResource("/image/green file.png"));
+        ImageIcon editIcon = new ImageIcon(Main.class.getResource("/image/green pencil.png"));
+        ImageIcon deleteIcon = new ImageIcon(Main.class.getResource("/image/green -.png"));
 	
-	ImageIcon openIcon = new ImageIcon(Main.class.getResource("/image/blue question.png"));
-	ImageIcon saveIcon = new ImageIcon(Main.class.getResource("/image/ebay.png"));
-	ImageIcon newIcon = new ImageIcon(Main.class.getResource("/image/blue settings.png"));
-	
-	Action openAction = new AbstractAction("About", openIcon) {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(null, "PriceWatcher, version 13.1");
-			System.out.println("Opening About");
-		}
-	};
-	Action saveAction = new AbstractAction("Save", saveIcon) {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			System.out.println("Save File");
-		}
-	};
-	Action newAction = new AbstractAction("New", newIcon) {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			System.out.println("New File");
-		}
-	};
+	Action addAction = new AbstractAction("Save", addIcon) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Adding");
+            }
+        };
+        Action checkAction = new AbstractAction("About", checkIcon) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	JOptionPane.showMessageDialog(null, "PriceWatcher, version 13.1");
+                System.out.println("Opening About");
+            }
+        };
+        Action searchAction = new AbstractAction("Save", searchIcon) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Save File");
+            }
+        };
+        Action firstAction = new AbstractAction("New", firstIcon) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("New File");
+            }
+        };
+        Action backAction = new AbstractAction("New", backIcon) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("New File");
+            }
+        };
+        Action selectedAction = new AbstractAction("New", selectedIcon) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("New File");
+            }
+        };
+        Action webAction = new AbstractAction("New", webIcon) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("New File");
+            }
+        };
+        Action editAction = new AbstractAction("New", editIcon) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("New File");
+            }
+        };
+        Action deleteAction = new AbstractAction("New", deleteIcon) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("New File");
+            }
+        };
 	
 	private JPanel JToolBarUI() {
 		JPanel panel = new JPanel();
@@ -185,9 +226,15 @@ public class Main extends JFrame {
 		
 		toolBar.add(Box.createHorizontalGlue());
 		toolBar.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
-		toolBar.add(newAction);
-		toolBar.add(openAction);
-		toolBar.add(saveAction);
+		toolBar.add(addAction);
+        	toolBar.add(checkAction);
+        	toolBar.add(searchAction);
+        	toolBar.add(firstAction);
+        	toolBar.add(backAction);
+        	toolBar.add(selectedAction);
+        	toolBar.add(webAction);
+        	toolBar.add(editAction);
+        	toolBar.add(deleteAction);
 		
 		return panel;
 	}
