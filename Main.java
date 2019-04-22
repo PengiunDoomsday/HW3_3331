@@ -2,11 +2,10 @@ package pricewatcher.base;
 
 import java.awt.*;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.*;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
+import javax.swing.border.*;
 
 import pricewatcher.base.Menu.MenuItemListener;
 
@@ -21,6 +20,8 @@ public class Main extends JFrame {
 
 	/** Default dimension of the dialog. */
 	private final static Dimension DEFAULT_SIZE = new Dimension(400, 300);
+
+	private static final ActionListener menuItemListener = null;
 
 	/** Special panel to display the watched item. */
 	private ItemView itemView;
@@ -119,6 +120,7 @@ public class Main extends JFrame {
 
 		JPanel control = makeControlPanel();
 		JPanel toolbar = JToolBarUI();
+		JPanel menubar = JMenuBarUI();
 		control.setBorder(BorderFactory.createEmptyBorder(10, 16, 0, 16));
 		add(control, BorderLayout.NORTH);
 		JPanel board = new JPanel();
@@ -133,7 +135,8 @@ public class Main extends JFrame {
 		board.add(itemList);
 		itemList.setCellRenderer(new ItemRenderer());
 
-		getContentPane().add(toolbar, BorderLayout.NORTH);
+		getContentPane().add(menubar,BorderLayout.NORTH);
+		menubar.add(toolbar, BorderLayout.NORTH);
 
 		add(board, BorderLayout.CENTER);
 		msgBar.setBorder(BorderFactory.createEmptyBorder(10, 16, 10, 0));
@@ -217,17 +220,10 @@ public class Main extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-		JMenuItem addMenuItem = new JMenuItem(addAction);
-		JMenuItem checkMenuItem = new JMenuItem(checkAction);
-
-		JMenuBar menuBar = new JMenuBar();
-		JMenu fileMenu = new JMenu("File");
-		fileMenu.add(addMenuItem);
-		fileMenu.add(checkMenuItem);
-		menuBar.add(fileMenu);
-
+		
 		JToolBar toolBar = new JToolBar();
 		panel.add(toolBar);
+		
 
 		toolBar.add(Box.createHorizontalGlue());
 		toolBar.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
@@ -260,6 +256,8 @@ public class Main extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
+		JMenuBar menuBar = new JMenuBar();
+		panel.add(menuBar);
 		/**
 		 * 
 		 * Create Menus
@@ -273,49 +271,40 @@ public class Main extends JFrame {
 		JMenuItem aboutMenuItem = new JMenuItem("About");
 		aboutMenuItem.setMnemonic(KeyEvent.VK_N);
 		aboutMenuItem.setActionCommand("About");
-
 		JMenuItem exitMenuItem = new JMenuItem("Exit");
 		exitMenuItem.setActionCommand("Exit");
 
 		// Item
 		JMenuItem checkMenuItem = new JMenuItem("Check Prices");
 		checkMenuItem.setActionCommand("Check Prices");
-
 		JMenuItem addMenuItem = new JMenuItem("Add Item");
 		addMenuItem.setActionCommand("Add Item");
-
 		JMenuItem searchMenuItem = new JMenuItem("Search");
 		searchMenuItem.setActionCommand("Search");
-
 		JMenuItem firstMenuItem = new JMenuItem("Search first");
 		firstMenuItem.setActionCommand("Search first");
-
 		JMenuItem lastMenuItem = new JMenuItem("Search last");
 		lastMenuItem.setActionCommand("Search last");
 
 		// Sort
 		JMenuItem addOldItem = new JMenuItem("Added Oldest");
 		addOldItem.setActionCommand("Added Oldest");
-
 		JMenuItem addNewItem = new JMenuItem("Added newest");
 		addNewItem.setActionCommand("Added Newest");
-
 		JMenuItem nameAscItem = new JMenuItem("Name ascending");
 		nameAscItem.setActionCommand("Name ascending");
-
 		JMenuItem nameDesItem = new JMenuItem("Name descending");
 		nameDesItem.setActionCommand("Name descending");
-
 		JMenuItem priceChangeItem = new JMenuItem("Price change (%)");
 		priceChangeItem.setActionCommand("Price change (%)");
-
 		JMenuItem priceLowItem = new JMenuItem("Price low ($)");
 		priceLowItem.setActionCommand("Price low ($)");
-
 		JMenuItem priceHighItem = new JMenuItem("Price high ($)");
 		priceHighItem.setActionCommand("Price high ($)");
 
-		MenuItemListener menuItemListener = new MenuItemListener();
+		
+		
+//		MenuItemListener menuItemListener = new MenuItemListener();
 
 		/**
 		 * 
@@ -343,6 +332,13 @@ public class Main extends JFrame {
 		priceLowItem.addActionListener(menuItemListener);
 		priceHighItem.addActionListener(menuItemListener);
 
+		
+
+		menuBar.add(appMenu);
+		menuBar.add(itemMenu);
+		menuBar.add(sortMenu);
+		
+		
 		appMenu.add(aboutMenuItem);
 		appMenu.addSeparator();
 		appMenu.add(exitMenuItem);
@@ -365,12 +361,6 @@ public class Main extends JFrame {
 		sortMenu.add(priceLowItem);
 		sortMenu.add(priceHighItem);
 
-		JMenuBar menuBar = new JMenuBar();
-		panel.add(menuBar);
-
-		menuBar.add(appMenu);
-		menuBar.add(itemMenu);
-		menuBar.add(sortMenu);
 
 		return panel;
 
