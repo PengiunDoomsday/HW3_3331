@@ -157,8 +157,10 @@ public class Main extends JFrame {
 	Action addAction = new AbstractAction("Add an item", addIcon) {
         @Override
         public void actionPerformed(ActionEvent e) {
+    		JOptionPane.showInputDialog("Name: ", null);
             System.out.println("Adding");
         }
+        
     };
     Action checkAction = new AbstractAction("Check all Prices", checkIcon) {
         @Override
@@ -212,7 +214,6 @@ public class Main extends JFrame {
     	@Override
     	public void actionPerformed(ActionEvent e) {
     		JOptionPane.showMessageDialog(null, "PriceWatcher, version 13.1");
-			System.out.println("Opening About");
     	}
     };
 
@@ -269,23 +270,26 @@ public class Main extends JFrame {
 
 		// App
 		JMenuItem aboutMenuItem = new JMenuItem("About");
+		
 		aboutMenuItem.setMnemonic(KeyEvent.VK_N);
-		aboutMenuItem.setActionCommand("About");
+		aboutMenuItem.setAction(aboutAction);
+		
 		JMenuItem exitMenuItem = new JMenuItem("Exit");
 		exitMenuItem.setActionCommand("Exit");
 
 		// Item
 		JMenuItem checkMenuItem = new JMenuItem("Check Prices");
-		checkMenuItem.setActionCommand("Check Prices");
+		checkMenuItem.setAction(checkAction);
 		JMenuItem addMenuItem = new JMenuItem("Add Item");
-		addMenuItem.setActionCommand("Add Item");
+		addMenuItem.setAction(addAction);
 		JMenuItem searchMenuItem = new JMenuItem("Search");
-		searchMenuItem.setActionCommand("Search");
+		searchMenuItem.setAction(searchAction);
 		JMenuItem firstMenuItem = new JMenuItem("Search first");
-		firstMenuItem.setActionCommand("Search first");
+		firstMenuItem.setAction(firstAction);
 		JMenuItem lastMenuItem = new JMenuItem("Search last");
-		lastMenuItem.setActionCommand("Search last");
+		lastMenuItem.setAction(backAction);
 
+		
 		// Sort
 		JMenuItem addOldItem = new JMenuItem("Added Oldest");
 		addOldItem.setActionCommand("Added Oldest");
@@ -302,6 +306,7 @@ public class Main extends JFrame {
 		JMenuItem priceHighItem = new JMenuItem("Price high ($)");
 		priceHighItem.setActionCommand("Price high ($)");
 
+	
 		
 		
 //		MenuItemListener menuItemListener = new MenuItemListener();
