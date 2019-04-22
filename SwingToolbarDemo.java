@@ -1,110 +1,70 @@
-//package pricewatcher.base;
-//
-//import javax.swing.*;
-//import java.awt.*;
-//import java.awt.event.*;
-//
-//@SuppressWarnings("serial")
-//
-//
-//public class SwingToolbarDemo extends JFrame {
-//
-//	protected JTextArea textArea;
-//	protected String newline = "\n";
-//	public SwingToolbarDemo() {
-//		super("ToolBarDemo");
-//		// Create the toolbar.
-//		JToolBar jtbMainToolbar = new JToolBar();
-//		// setFloatable(false) to make the toolbar non movable
-//		addButtons(jtbMainToolbar);
-//		// Create the text area
-//		textArea = new JTextArea(5, 30);
-//		JScrollPane jsPane = new JScrollPane(textArea);
-//		// Lay out the content pane.
-//		JPanel jplContentPane = new JPanel();
-//		jplContentPane.setLayout(new BorderLayout());
-//		jplContentPane.setPreferredSize(new Dimension(400, 100));
-//		jplContentPane.add(jtbMainToolbar, BorderLayout.NORTH);
-//		jplContentPane.add(jsPane, BorderLayout.CENTER);
-//		setContentPane(jplContentPane);
-//	}
-//	public void addButtons(JToolBar jtbToolBar) {
-//		JButton jbnToolbarButtons = null;
-//		// first button
-//		jbnToolbarButtons = new JButton(new ImageIcon("left.gif"));
-//		jbnToolbarButtons.setToolTipText("left");
-//		jbnToolbarButtons.addActionListener(new ActionListener() {
-//
-//		     public void actionPerformed(ActionEvent e) {
-//			displayInTextArea("This is Left Toolbar Button Reporting");
-//			}
-//		});
-//		jtbToolBar.add(jbnToolbarButtons);
-//		// 2nd button
-//		jbnToolbarButtons = new JButton(new ImageIcon("right.gif"));
-//		jbnToolbarButtons.setToolTipText("right");
-//		jbnToolbarButtons.addActionListener(new ActionListener() {
-//
-//		     public void actionPerformed(ActionEvent e) {
-//			displayInTextArea("This is right Toolbar Button Reporting");
-//			}
-//		});
-//		jtbToolBar.add(jbnToolbarButtons);
-//		jtbToolBar.addSeparator();
-//		// 3rd button
-//		jbnToolbarButtons = new JButton(new ImageIcon("open.gif"));
-//		jbnToolbarButtons.setToolTipText("open");
-//		jbnToolbarButtons.addActionListener(new ActionListener() {
-//
-//		     public void actionPerformed(ActionEvent e) {
-//			displayInTextArea("This is open Toolbar Button Reporting");
-//			}
-//		});
-//		jtbToolBar.add(jbnToolbarButtons);
-//		// 4th button
-//		jbnToolbarButtons = new JButton(new ImageIcon("save.gif"));
-//		jbnToolbarButtons.setToolTipText("save");
-//		jbnToolbarButtons.addActionListener(new ActionListener() {
-//
-//		     public void actionPerformed(ActionEvent e) {
-//			displayInTextArea("This is save Toolbar Button Reporting");
-//			}
-//		});
-//		jtbToolBar.add(jbnToolbarButtons);
-//		// We can add separators to group similar components
-//		jtbToolBar.addSeparator();
-//		// fourth button
-//		jbnToolbarButtons = new JButton("Text button");
-//		jbnToolbarButtons.addActionListener(new ActionListener() {
-//
-//		     public void actionPerformed(ActionEvent e) {
-//			displayInTextArea("Text button");
-//			}
-//		});
-//		jtbToolBar.add(jbnToolbarButtons);
-//		// fifth component is NOT a button!
-//		JTextField jtfButton = new JTextField("Text field");
-//		jtfButton.setEditable(false);
-//		jtfButton.addActionListener(new ActionListener() {
-//
-//		     public void actionPerformed(ActionEvent e) {
-//			displayInTextArea("TextField component can also be placed");
-//			}
-//		});
-//		jtbToolBar.add(jtfButton);
-//	}
-//	protected void displayInTextArea(String actionDescription) {
-//		textArea.append(actionDescription + newline);
-//	}
-//	public static void main(String[] args) {
-//		SwingToolbarDemo jtfToolbar = new SwingToolbarDemo(); // Extends Frame.
-//		jtfToolbar.pack();
-//		jtfToolbar.addWindowListener(new WindowAdapter() {
-//
-//			public void windowClosing(WindowEvent e) {
-//				System.exit(0);
-//			}
-//		});
-//		jtfToolbar.setVisible(true);
-//	}
-//}
+import java.awt.*; 
+import javax.swing.*; 
+import java.awt.event.*; 
+import javax.swing.border.LineBorder;
+
+public class SwingToolbarDemo extends JFrame {
+	
+	public SwingToolbarDemo() {
+        ImageIcon openIcon = new ImageIcon(
+        		SwingToolbarDemo.class.getResource("/image/blue ?.png"));
+        ImageIcon saveIcon = new ImageIcon(
+        		SwingToolbarDemo.class.getResource("/image/ebay.png"));
+        ImageIcon newIcon = new ImageIcon(
+        		SwingToolbarDemo.class.getResource("/image/blue settings.png"));
+
+        Action openAction = new AbstractAction("About", openIcon) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	JOptionPane.showMessageDialog(null, "PriceWatcher, version 13.1");
+                System.out.println("Opening About");
+            }
+        };
+        Action saveAction = new AbstractAction("Save", saveIcon) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Save File");
+            }
+        };
+        Action newAction = new AbstractAction("New", newIcon) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("New File");
+            }
+        };
+
+        JMenuItem openMenuItem = new JMenuItem(openAction);
+        JMenuItem saveMenuItem = new JMenuItem(saveAction);
+        JMenuItem newMenuItem = new JMenuItem(newAction);
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu fileMenu = new JMenu("File");
+        fileMenu.add(openMenuItem);
+        fileMenu.add(saveMenuItem);
+        fileMenu.add(newMenuItem);
+        menuBar.add(fileMenu);
+
+        JToolBar toolBar = new JToolBar();
+        toolBar.add(Box.createHorizontalGlue());
+        toolBar.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
+        toolBar.add(newAction);
+        toolBar.add(openAction);
+        toolBar.add(saveAction);
+
+        JFrame frame = new JFrame("Toolbar and Menu Test");
+        frame.setJMenuBar(menuBar);
+        frame.add(toolBar, BorderLayout.PAGE_START);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationByPlatform(true);
+        frame.setVisible(true);
+
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new SwingToolbarDemo();
+            }
+        });
+    }
