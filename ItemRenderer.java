@@ -24,11 +24,5 @@ public class ItemRenderer extends JLabel implements ListCellRenderer<Item>{
        		}
 		return itemView;
 	}
-	
-	@Override
-	public String toString() {
-		return getName();
-	}
-	
 
 }
