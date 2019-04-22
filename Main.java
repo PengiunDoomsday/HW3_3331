@@ -3,9 +3,12 @@ package pricewatcher.base;
 import java.awt.*;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
+
+import pricewatcher.base.Menu.MenuItemListener;
 
 /**
  * A dialog for tracking the price of an item.
@@ -21,15 +24,14 @@ public class Main extends JFrame {
 
 	/** Special panel to display the watched item. */
 	private ItemView itemView;
-//	private Toolbar toolBar;
+	// private Toolbar toolBar;
 	/** Message bar to display various messages. */
 	private JLabel msgBar = new JLabel(" ");
 	private Item item;
 	private Item item2;
 
 	private JList<Item> itemList;
-	
-	
+
 	/**
 	 * Create a new dialog.
 	 * 
@@ -68,8 +70,6 @@ public class Main extends JFrame {
 
 		configureUI();
 		JToolBarUI();
-		
-		
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setVisible(true);
@@ -115,8 +115,8 @@ public class Main extends JFrame {
 
 	/** Configure UI. */
 	private void configureUI() {
-		setLayout(new BorderLayout());		
-		
+		setLayout(new BorderLayout());
+
 		JPanel control = makeControlPanel();
 		JPanel toolbar = JToolBarUI();
 		control.setBorder(BorderFactory.createEmptyBorder(10, 16, 0, 16));
@@ -125,123 +125,260 @@ public class Main extends JFrame {
 		board.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(10, 16, 0, 16),
 				BorderFactory.createLineBorder(Color.GRAY)));
 		board.setLayout(new GridLayout(1, 1));
-//		itemView = new ItemView(item);
-//
-//		itemView.setClickListener(this::viewPageClicked);
-//		board.add(itemView);
+		// itemView = new ItemView(item);
+		//
+		// itemView.setClickListener(this::viewPageClicked);
+		// board.add(itemView);
 		add(new JScrollPane(itemList));
 		board.add(itemList);
 		itemList.setCellRenderer(new ItemRenderer());
-		
+
 		getContentPane().add(toolbar, BorderLayout.NORTH);
-		
+
 		add(board, BorderLayout.CENTER);
 		msgBar.setBorder(BorderFactory.createEmptyBorder(10, 16, 10, 0));
 		add(msgBar, BorderLayout.SOUTH);
 	}
-	
+
 	ImageIcon checkIcon = new ImageIcon(Main.class.getResource("/image/blue check.png"));
-        ImageIcon addIcon = new ImageIcon(Main.class.getResource("/image/blue +.png"));
-        ImageIcon searchIcon = new ImageIcon(Main.class.getResource("/image/blue search.png"));
-        ImageIcon firstIcon = new ImageIcon(Main.class.getResource("/image/blue back.png"));
-        ImageIcon backIcon = new ImageIcon(Main.class.getResource("/image/blue forward.png"));
-        ImageIcon selectedIcon = new ImageIcon(Main.class.getResource("/image/green check.png"));
-        ImageIcon webIcon = new ImageIcon(Main.class.getResource("/image/green file.png"));
-        ImageIcon editIcon = new ImageIcon(Main.class.getResource("/image/green pencil.png"));
-        ImageIcon deleteIcon = new ImageIcon(Main.class.getResource("/image/green -.png"));
-	
-	Action addAction = new AbstractAction("Save", addIcon) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Adding");
-            }
-        };
-        Action checkAction = new AbstractAction("About", checkIcon) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	JOptionPane.showMessageDialog(null, "PriceWatcher, version 13.1");
-                System.out.println("Opening About");
-            }
-        };
-        Action searchAction = new AbstractAction("Save", searchIcon) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Save File");
-            }
-        };
-        Action firstAction = new AbstractAction("New", firstIcon) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("New File");
-            }
-        };
-        Action backAction = new AbstractAction("New", backIcon) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("New File");
-            }
-        };
-        Action selectedAction = new AbstractAction("New", selectedIcon) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("New File");
-            }
-        };
-        Action webAction = new AbstractAction("New", webIcon) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("New File");
-            }
-        };
-        Action editAction = new AbstractAction("New", editIcon) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("New File");
-            }
-        };
-        Action deleteAction = new AbstractAction("New", deleteIcon) {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("New File");
-            }
-        };
-	
+    ImageIcon addIcon = new ImageIcon(Main.class.getResource("/image/blue +.png"));
+    ImageIcon searchIcon = new ImageIcon(Main.class.getResource("/image/blue search.png"));
+    ImageIcon firstIcon = new ImageIcon(Main.class.getResource("/image/blue back.png"));
+    ImageIcon backIcon = new ImageIcon(Main.class.getResource("/image/blue forward.png"));
+    ImageIcon selectedIcon = new ImageIcon(Main.class.getResource("/image/green check.png"));
+    ImageIcon webIcon = new ImageIcon(Main.class.getResource("/image/green file.png"));
+    ImageIcon editIcon = new ImageIcon(Main.class.getResource("/image/green pencil.png"));
+    ImageIcon deleteIcon = new ImageIcon(Main.class.getResource("/image/green -.png"));
+    ImageIcon questionIcon = new ImageIcon(Main.class.getResource("/image/blue question.png"));
+    
+	Action addAction = new AbstractAction("Add an item", addIcon) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Adding");
+        }
+    };
+    Action checkAction = new AbstractAction("Check all Prices", checkIcon) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Checking Prices");
+        }
+    };
+    Action searchAction = new AbstractAction("Search", searchIcon) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Search item");
+        }
+    };
+    Action firstAction = new AbstractAction("New", firstIcon) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("New File");
+        }
+    };
+    Action backAction = new AbstractAction("New", backIcon) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("New File");
+        }
+    };
+    Action selectedAction = new AbstractAction("New", selectedIcon) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("New File");
+        }
+    };
+    Action webAction = new AbstractAction("New", webIcon) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("New File");
+        }
+    };
+    Action editAction = new AbstractAction("New", editIcon) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("New File");
+        }
+    };
+    Action deleteAction = new AbstractAction("New", deleteIcon) {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("New File");
+        }
+    };
+    Action aboutAction = new AbstractAction("About", questionIcon) {
+    	@Override
+    	public void actionPerformed(ActionEvent e) {
+    		JOptionPane.showMessageDialog(null, "PriceWatcher, version 13.1");
+			System.out.println("Opening About");
+    	}
+    };
+
 	private JPanel JToolBarUI() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		
-		JMenuItem openMenuItem = new JMenuItem(openAction);
-		JMenuItem saveMenuItem = new JMenuItem(saveAction);
-		JMenuItem newMenuItem = new JMenuItem(newAction);
+
+		JMenuItem addMenuItem = new JMenuItem(addAction);
+		JMenuItem checkMenuItem = new JMenuItem(checkAction);
 
 		JMenuBar menuBar = new JMenuBar();
 		JMenu fileMenu = new JMenu("File");
-		fileMenu.add(openMenuItem);
-		fileMenu.add(saveMenuItem);
-		fileMenu.add(newMenuItem);
+		fileMenu.add(addMenuItem);
+		fileMenu.add(checkMenuItem);
 		menuBar.add(fileMenu);
 
 		JToolBar toolBar = new JToolBar();
 		panel.add(toolBar);
-		
+
 		toolBar.add(Box.createHorizontalGlue());
 		toolBar.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
+
+		toolBar.add(checkAction);
 		toolBar.add(addAction);
-        	toolBar.add(checkAction);
-        	toolBar.add(searchAction);
-        	toolBar.add(firstAction);
-        	toolBar.add(backAction);
-        	toolBar.add(selectedAction);
-        	toolBar.add(webAction);
-        	toolBar.add(editAction);
-        	toolBar.add(deleteAction);
+		toolBar.add(searchAction);
+		toolBar.add(firstAction);
+		toolBar.add(backAction);
+		toolBar.addSeparator();
+		toolBar.add(selectedAction);
+		toolBar.add(webAction);
+		toolBar.add(editAction);
+		toolBar.add(deleteAction);
+		toolBar.addSeparator();
+		toolBar.add(aboutAction);
+		toolBar.addSeparator();
+		toolBar.addSeparator();
+		toolBar.addSeparator();
+		toolBar.addSeparator();
+		toolBar.addSeparator();
+		toolBar.addSeparator();
+
+
 		
 		return panel;
 	}
 
+	private JPanel JMenuBarUI() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+		/**
+		 * 
+		 * Create Menus
+		 * 
+		 */
+		JMenu appMenu = new JMenu("App");
+		JMenu itemMenu = new JMenu("Item");
+		JMenu sortMenu = new JMenu("Sort");
+
+		// App
+		JMenuItem aboutMenuItem = new JMenuItem("About");
+		aboutMenuItem.setMnemonic(KeyEvent.VK_N);
+		aboutMenuItem.setActionCommand("About");
+
+		JMenuItem exitMenuItem = new JMenuItem("Exit");
+		exitMenuItem.setActionCommand("Exit");
+
+		// Item
+		JMenuItem checkMenuItem = new JMenuItem("Check Prices");
+		checkMenuItem.setActionCommand("Check Prices");
+
+		JMenuItem addMenuItem = new JMenuItem("Add Item");
+		addMenuItem.setActionCommand("Add Item");
+
+		JMenuItem searchMenuItem = new JMenuItem("Search");
+		searchMenuItem.setActionCommand("Search");
+
+		JMenuItem firstMenuItem = new JMenuItem("Search first");
+		firstMenuItem.setActionCommand("Search first");
+
+		JMenuItem lastMenuItem = new JMenuItem("Search last");
+		lastMenuItem.setActionCommand("Search last");
+
+		// Sort
+		JMenuItem addOldItem = new JMenuItem("Added Oldest");
+		addOldItem.setActionCommand("Added Oldest");
+
+		JMenuItem addNewItem = new JMenuItem("Added newest");
+		addNewItem.setActionCommand("Added Newest");
+
+		JMenuItem nameAscItem = new JMenuItem("Name ascending");
+		nameAscItem.setActionCommand("Name ascending");
+
+		JMenuItem nameDesItem = new JMenuItem("Name descending");
+		nameDesItem.setActionCommand("Name descending");
+
+		JMenuItem priceChangeItem = new JMenuItem("Price change (%)");
+		priceChangeItem.setActionCommand("Price change (%)");
+
+		JMenuItem priceLowItem = new JMenuItem("Price low ($)");
+		priceLowItem.setActionCommand("Price low ($)");
+
+		JMenuItem priceHighItem = new JMenuItem("Price high ($)");
+		priceHighItem.setActionCommand("Price high ($)");
+
+		MenuItemListener menuItemListener = new MenuItemListener();
+
+		/**
+		 * 
+		 * JMenuItem Action Listeners
+		 * 
+		 */
+
+		// app
+		aboutMenuItem.addActionListener(menuItemListener);
+		exitMenuItem.addActionListener(menuItemListener);
+
+		// Item
+		checkMenuItem.addActionListener(menuItemListener);
+		addMenuItem.addActionListener(menuItemListener);
+		searchMenuItem.addActionListener(menuItemListener);
+		firstMenuItem.addActionListener(menuItemListener);
+		lastMenuItem.addActionListener(menuItemListener);
+
+		// Sort
+		addOldItem.addActionListener(menuItemListener);
+		addNewItem.addActionListener(menuItemListener);
+		nameAscItem.addActionListener(menuItemListener);
+		nameDesItem.addActionListener(menuItemListener);
+		priceChangeItem.addActionListener(menuItemListener);
+		priceLowItem.addActionListener(menuItemListener);
+		priceHighItem.addActionListener(menuItemListener);
+
+		appMenu.add(aboutMenuItem);
+		appMenu.addSeparator();
+		appMenu.add(exitMenuItem);
+
+		itemMenu.add(checkMenuItem);
+		itemMenu.add(addMenuItem);
+		itemMenu.addSeparator();
+		itemMenu.add(searchMenuItem);
+		itemMenu.add(firstMenuItem);
+		itemMenu.add(lastMenuItem);
+		itemMenu.addSeparator();
+
+		sortMenu.add(addOldItem);
+		sortMenu.add(addNewItem);
+		sortMenu.addSeparator();
+		sortMenu.add(nameAscItem);
+		sortMenu.add(nameDesItem);
+		sortMenu.addSeparator();
+		sortMenu.add(priceChangeItem);
+		sortMenu.add(priceLowItem);
+		sortMenu.add(priceHighItem);
+
+		JMenuBar menuBar = new JMenuBar();
+		panel.add(menuBar);
+
+		menuBar.add(appMenu);
+		menuBar.add(itemMenu);
+		menuBar.add(sortMenu);
+
+		return panel;
+
+	}
+
 	/** Create a control panel consisting of a refresh button. */
-	private JPanel makeControlPanel() {		
-		
+	private JPanel makeControlPanel() {
+
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEADING));
 		JButton refreshButton = new JButton("Refresh Check prices");
 		refreshButton.setFocusPainted(false);
