@@ -7,7 +7,6 @@ import java.io.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import pricewatcher.base.Menu.MenuItemListener;
 
 /**
  * A dialog for tracking the price of an item.
@@ -68,7 +67,9 @@ public class Main extends JFrame {
 
 		// create the list
 		itemList = new JList<>(listModel);
-
+		JScrollPane scroll = (new JScrollPane(itemList));
+		
+		
 		configureUI();
 		JToolBarUI();
 
@@ -117,6 +118,8 @@ public class Main extends JFrame {
 	/** Configure UI. */
 	private void configureUI() {
 		setLayout(new BorderLayout());
+		JScrollPane scroll = (new JScrollPane(itemList));
+
 
 		JPanel control = makeControlPanel();
 		JPanel toolbar = JToolBarUI();
@@ -124,19 +127,15 @@ public class Main extends JFrame {
 		control.setBorder(BorderFactory.createEmptyBorder(10, 16, 0, 16));
 		add(control, BorderLayout.NORTH);
 		JPanel board = new JPanel();
-		board.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(10, 16, 0, 16),
-				BorderFactory.createLineBorder(Color.GRAY)));
-		board.setLayout(new GridLayout(1, 1));
-		// itemView = new ItemView(item);
-		//
-		// itemView.setClickListener(this::viewPageClicked);
-		// board.add(itemView);
-		add(new JScrollPane(itemList));
-		board.add(itemList);
-		itemList.setCellRenderer(new ItemRenderer());
 
+		board.setLayout(new BorderLayout());
+		
+		
 		getContentPane().add(menubar,BorderLayout.NORTH);
-		menubar.add(toolbar, BorderLayout.NORTH);
+		menubar.add(toolbar, BorderLayout.EAST);
+		
+		board.add(scroll,BorderLayout.CENTER);
+		itemList.setCellRenderer(new ItemRenderer());
 
 		add(board, BorderLayout.CENTER);
 		msgBar.setBorder(BorderFactory.createEmptyBorder(10, 16, 10, 0));
@@ -219,14 +218,15 @@ public class Main extends JFrame {
 
 	private JPanel JToolBarUI() {
 		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
 		
 		JToolBar toolBar = new JToolBar();
 		panel.add(toolBar);
+		toolBar.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 
-		toolBar.add(Box.createHorizontalGlue());
+//		toolBar.add(Box.createHorizontalGlue());
 		toolBar.setBorder(new LineBorder(Color.LIGHT_GRAY, 1));
 
 		toolBar.add(checkAction);
@@ -258,7 +258,7 @@ public class Main extends JFrame {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
 		JMenuBar menuBar = new JMenuBar();
-		panel.add(menuBar);
+		setJMenuBar(menuBar);
 		/**
 		 * 
 		 * Create Menus
@@ -307,10 +307,6 @@ public class Main extends JFrame {
 		priceHighItem.setActionCommand("Price high ($)");
 
 	
-		
-		
-//		MenuItemListener menuItemListener = new MenuItemListener();
-
 		/**
 		 * 
 		 * JMenuItem Action Listeners
