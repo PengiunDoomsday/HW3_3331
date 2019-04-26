@@ -29,6 +29,7 @@ public class Main extends JFrame {
 	private JLabel msgBar = new JLabel(" ");
 	private Item item;
 	private Item item2;
+	private AddressDialog dialog;
 
 	private JList<Item> itemList;
 
@@ -156,7 +157,7 @@ public class Main extends JFrame {
 	Action addAction = new AbstractAction("Add an item", addIcon) {
         @Override
         public void actionPerformed(ActionEvent e) {
-    		JOptionPane.showInputDialog("Name: ", null);
+        	add(dialog);
             System.out.println("Adding");
         }
         
@@ -387,3 +388,4 @@ public class Main extends JFrame {
 		});
 	}
 }
+
