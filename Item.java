@@ -1,85 +1,100 @@
 package pricewatcher.base;
 
-import java.io.*;
+
+import java.io.IOException;
 
 public class Item {
-	/** Name of the item, use a good one, saved as a string */
-	private String name;
-	/** URL of the item, saved as a string */
-	private String url;
-	/** initial Price of the item, saved as a double */
-	private double initialPrice;
-	private double currentPrice;
-	private double priceChange;
-	private String dateAdded;
 
-	public Item next;
+    /**
+     * Name of the item, use a good one, saved as a string
+     */
+    private String name;
+    /**
+     * URL of the item, saved as a string
+     */
+    private String url;
+    /**
+     * initial Price of the item, saved as a double
+     */
+    private double initialPrice;
+    private double currentPrice;
+    private double priceChange;
+    private String dateAdded;
 
-	public Item(String name, String url, double currentPrice, double priceChange) throws IOException {
-		// contains name, url, current price
-		this.name = name;
-		this.url = url;
-		this.currentPrice = currentPrice;
-		this.priceChange = priceChange;
-	}
+    public Item next;
 
-	public Item() {
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * Contains name, url and current price.
+     * @param name
+     * @param url
+     * @param currentPrice
+     * @param priceChange
+     * @throws IOException 
+     */
+    public Item(String name, String url, double currentPrice, double priceChange) throws IOException {
+        // contains name, url, current price
+        this.name = name;
+        this.url = url;
+        this.currentPrice = currentPrice;
+        this.priceChange = priceChange;
+    }
 
-	public Item(Item item) {
-		// TODO Auto-generated constructor stub
-	}
+    public Item() {
+        // TODO Auto-generated constructor stub
+    }
 
-	// Setter
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Item(Item item) {
+        // TODO Auto-generated constructor stub
+    }
 
-	public void setUrl(String url) {
-		this.url = url;
-	}
+    // Setter
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setInitialPrice(double initialPrice) {
-		this.initialPrice = initialPrice;
-	}
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-	public void setCurrentPrice(double currentPrice) {
-		this.currentPrice = currentPrice;
-	}
+    public void setInitialPrice(double initialPrice) {
+        this.initialPrice = initialPrice;
+    }
 
-	public void setDateAdded(String dateAdded) {
-		this.dateAdded = dateAdded;
-	}
+    public void setCurrentPrice(double currentPrice) {
+        this.currentPrice = currentPrice;
+    }
 
-	public void setPriceChange(double priceChange) {
-		this.priceChange = priceChange;
-	}
+    public void setDateAdded(String dateAdded) {
+        this.dateAdded = dateAdded;
+    }
 
-	// Getters
-	public String getName() {
-		return name;
-	}
+    public void setPriceChange(double priceChange) {
+        this.priceChange = priceChange;
+    }
 
-	public String getUrl() {
-		return url;
-	}
+    // Getters
+    public String getName() {
+        return name;
+    }
 
-	public double getInitialPrice() {
-		return initialPrice;
-	}
+    public String getUrl() {
+        return url;
+    }
 
-	public double getCurrentPrice() {
-		return currentPrice;
-	}
+    public double getInitialPrice() {
+        return initialPrice;
+    }
 
-	public String getDateAdded() {
-		return dateAdded;
-	}
+    public double getCurrentPrice() {
+        return currentPrice;
+    }
 
-	public double getPriceChange() {
-		return priceChange;
-	}
+    public String getDateAdded() {
+        return dateAdded;
+    }
 
+    public double getPriceChange() {
+        return priceChange;
+    }
 
 }
