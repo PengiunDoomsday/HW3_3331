@@ -25,6 +25,10 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 
 /**
  * A special panel to display the detail of an item.
@@ -162,6 +166,21 @@ public class ItemView extends JPanel {
             e.printStackTrace();
         }
         return null;
+    }
+    
+    public void fromJSON() throws FileNotFoundException {
+        JSONTokener tokener = new JSONTokener(new FileInputStream(new File("src/resources/products.json")));
+        JSONArray itemArray = new JSONArray(tokener);
+        for (int i = 0; i < productListJSON.length(); i++) {
+            JSONObject productJSON = productListJSON.getJSONObject(i);
+            create(productJSON.getString("name"),
+                    itemArray.getDouble("price"),
+                    itemArray.getString("date added"),
+                    itemArray.getString("URL"),
+                    itemArray.getDouble("change")
+            );
+        }
+
     }
 
 }
