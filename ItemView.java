@@ -171,6 +171,18 @@ public class ItemView extends JPanel {
         return null;
     }
     
+    public JSONArray toJSON() {
+        return new JSONArray(get());
+    }
+    
+    public void toStorage(JSONArray arr) {
+        try (FileWriter file = new FileWriter(new File("src/resources/products.json"))) {
+            file.write(arr.toString());
+        } catch (IOException ex) {
+            Logger.getLogger(StorageManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public Item fromJSON(JSONObject x) throws IOException {
     	Item item = new Item();
         String productName = (String)x.get("Product name");
