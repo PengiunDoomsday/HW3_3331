@@ -64,7 +64,7 @@ public class WebPriceFinder {
 
 			while ((line = in.readLine()) != null) {
 				if (line.contains("\"price-group\" role=\"text\" aria-label=")) {
-//					System.out.println("found the price" + line);
+					// System.out.println("found the price" + line);
 					Matcher matcher = pattern.matcher(line);
 					while (matcher.find()) {
 						String price = matcher.group(1);
@@ -108,8 +108,10 @@ public class WebPriceFinder {
 			Pattern pattern = Pattern.compile("\\$(\\d+\\.\\d{2})");
 
 			while ((line = in.readLine()) != null) {
-				if (line.contains(">Your price for this item is $<!-- -->")) {
-					System.out.println("found the price" + line);
+//				System.out.println(line);
+				
+				if (line.contains("priceView-hero-price priceView-customer-price")) {
+
 					Matcher matcher = pattern.matcher(line);
 					while (matcher.find()) {
 						String price = matcher.group(1);
@@ -153,9 +155,12 @@ public class WebPriceFinder {
 			String line;
 
 			while ((line = in.readLine()) != null) {
-				if (line.contains("price-current")) {
-					System.out.println("found the price" + line);
+				if ((line.contains("product_sale_price:"))){
+					
 					Matcher matcher = pattern.matcher(line);
+					int indxNumber = line.indexOf("[");
+					int indxNumber2 = line.indexOf("]");
+					System.out.println(line.substring(indxNumber + 2, indxNumber2 -1));
 					while (matcher.find()) {
 						String price = matcher.group(1);
 						double currentPrice = Double.parseDouble(price);
@@ -176,7 +181,7 @@ public class WebPriceFinder {
 	}
 
 	public static void main(String[] args) {
-		String wally = "https://www.bestbuy.com/site/days-gone-playstation-4/5358601.p?skuId=5358601";
+		String wally = "https://www.newegg.com/Product/Product.aspx?Item=N82E16883165434&cm_sp=Homepage_Dailydeal-_-P1_83-165-434-_-05082019";
 		PriceFinder(wally);
 		System.out.println("hey");
 	}
