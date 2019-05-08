@@ -1,8 +1,12 @@
 package pricewatcher.base;
 
 import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.IOException;
 
 import org.json.simple.JSONArray;
+
+import com.sun.org.apache.xalan.internal.templates.Constants;
 
 public class FileItemManager {
 	private static FileItemManager theinstance;
@@ -30,6 +34,10 @@ public class FileItemManager {
 		return item;
 	}
 	
+	public Item remove(String url) {
+		Item item = super.remove(url);
+	}
+	
 	@Override
 	public Item updatePrice(String url,float price) {
 		Item item = super.updatePrice(url,price);
@@ -46,6 +54,20 @@ public class FileItemManager {
 				arr.put(e.toJson());
 			}
 			write.write(arr.toString());
+		}
+		catch(IOException e) {
+			
+		}
+	}
+	
+	protected void restore() {
+		try(BufferedReader read = new BufferedReader(new FileReader(Constants.DATA_FILE))){
+			JSONTokener token = new JSONArray(read);
+			JSONArray arr = new JSONArray(token);
+			for(int i = 0; i < arr.length(); i++) {
+				Item item = Item.fromJSON(arr.getJSONObject(i));
+				super.add(item);
+			}
 		}
 		catch(IOException e) {
 			
