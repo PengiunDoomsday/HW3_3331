@@ -16,6 +16,9 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
@@ -25,9 +28,9 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+//import org.json.simple.JSONTokener;
 
 
 /**
@@ -168,18 +171,14 @@ public class ItemView extends JPanel {
         return null;
     }
     
-    public void fromJSON() throws FileNotFoundException {
-        JSONTokener tokener = new JSONTokener(new FileInputStream(new File("src/resources/products.json")));
-        JSONArray itemArray = new JSONArray(tokener);
-        for (int i = 0; i < productListJSON.length(); i++) {
-            JSONObject productJSON = productListJSON.getJSONObject(i);
-            create(productJSON.getString("name"),
-                    itemArray.getDouble("price"),
-                    itemArray.getString("date added"),
-                    itemArray.getString("URL"),
-                    itemArray.getDouble("change")
-            );
-        }
+    public Item fromJSON(JSONObject x) throws IOException {
+    	Item item = new Item();
+        String productName = (String)x.get("Product name");
+        String url = (String)x.get("url");
+        double initalPrice = (double)x.get("initial price");
+        double change = (double)x.get("change in price");
+        
+        return new Item(productName,url,initalPrice,change);
 
     }
 
