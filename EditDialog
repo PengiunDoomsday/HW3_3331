@@ -4,23 +4,17 @@ import java.awt.*;
 import javax.swing.*;
 
 
-
 @SuppressWarnings("serial")
 public class EditDialog extends JDialog {
 	JLabel Name = new JLabel("Name: ");
-
 	JLabel uRL = new JLabel("URL:");
-
 	JLabel Price = new JLabel("Price:");
 
 
 
 	JTextField nameField = new JTextField();
-
 	JTextField urlField = new JTextField();
-
 	JTextField priceField = new JTextField();
-	
 	JButton ok = new JButton("Ok");
 
 
