@@ -1,6 +1,10 @@
 package pricewatcher.base;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONObject;
 
 public class Item {
 	/** Name of the item, use a good one, saved as a string */
@@ -87,6 +91,28 @@ public class Item {
 	public double getPriceChange() {
 		return priceChange;
 	}
+	
+	public JSONObject toJSON() {
+		Map<String,Object> m = new HashMap<>();
+		m.put("Product name",this.name );
+		m.put("url", this.url);
+		m.put("initial price", this.initialPrice);
+		m.put("change", this.priceChange);
+		m.put("date add", this.dateAdded);
+		return new JSONObject(m);
+	}
+	
+	public static Item fromJSON(JSONObject x) throws IOException {
+    	Item item = new Item();
+        String productName = x.getString("Product name");
+        String url = x.getString("url");
+        double initalPrice = (float)x.getDouble("initial price");
+        double change = (float)x.getDouble("change");
+        String dateAdded = x.getString("date add");
+        
+        return new Item(productName,url,initalPrice,change);
+
+    }
 
 
 }
