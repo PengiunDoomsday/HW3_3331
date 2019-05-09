@@ -10,8 +10,8 @@ import javax.swing.border.*;
 /**
  * A dialog for tracking the price of an item.
  *
- * @author Javier Soon and Matthew Iglesias
- * @ID 80436654 and 80591632
+ * @author Javier Soon and Matthew Iglesias and Alejandro Villarreal
+ * @ID 80436654 and 80591632 and 88759517
  */
 @SuppressWarnings("serial")
 public class Main extends JFrame {
