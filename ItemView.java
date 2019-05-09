@@ -3,10 +3,8 @@ package pricewatcher.base;
 /*
  * Name:Javier Soon
  * Name: Matthew Iglesias
- * Name: Alejandro Villarreal
  * ID: 80436654
  * ID: 80591632
- * ID: 88759517
  * CS 3331
  * 
  */
@@ -26,7 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 //import org.json.simple.JSONTokener;
 
 
@@ -166,16 +164,4 @@ public class ItemView extends JPanel {
         }
         return null;
     }
-    
-    public Item fromJSON(JSONObject x) throws IOException {
-    	Item item = new Item();
-        String productName = (String)x.get("Product name");
-        String url = (String)x.get("url");
-        double initalPrice = (double)x.get("initial price");
-        double change = (double)x.get("change in price");
-        
-        return new Item(productName,url,initalPrice,change);
-
-    }
-
 }
