@@ -7,6 +7,10 @@ import java.io.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
+import org.json.JSONTokener;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * A dialog for tracking the price of an item.
  *
@@ -51,6 +55,7 @@ public class Main extends JFrame {
 
 		// // create the list
 		itemList = new JList<>(listModel);
+		loadItems();
 		// itemList.setVisibleRowCount(2);
 
 		configureUI();
@@ -60,6 +65,31 @@ public class Main extends JFrame {
 		// pack(); // makes it so the screen UI shows all the items
 		setVisible(true);
 
+	}
+
+	public void loadItems() {
+		String fromFile = "jsonItems.json";
+		try {
+			InputStream inpt = new FileInputStream(fromFile);
+			if (inpt == null) {
+				throw new NullPointerException("No file" + fromFile);
+			}
+			JSONTokener iToken = new JSONTokener(inpt);
+			JSONArray arr = new JSONArray(iToken);
+			for (int i = 0; i < arr.length(); i++) {
+				JSONObject o = new JSONObject(arr.get(i).toString());
+				System.out.println(o.toString());
+
+				Item objectItem = Item.fromJSON(o);
+				listModel.addElement(objectItem);
+				System.out.println("recieved");
+			}
+
+		} catch (FileNotFoundException eee) {
+			System.out.println("File not found");
+		} catch (IOException eee) {
+			System.out.println("File not found");
+		}
 	}
 
 	/**
@@ -267,13 +297,38 @@ public class Main extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("Delete File");
+			listModel.removeElementAt(itemList.getSelectedIndex());
 		}
+
 	};
 
 	Action aboutAction = new AbstractAction("About", questionIcon) {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JOptionPane.showMessageDialog(null, "PriceWatcher, version 13.1");
+		}
+	};
+
+	Action quitAction = new AbstractAction("Exit", deleteIcon) {
+		public void actionPerformed(ActionEvent e) {
+			// Initialize a JSON array
+			JSONArray arr = new JSONArray();
+			int listLen = listModel.size();
+			for (int i = 0; i < listLen; i++) {
+				if (listModel.elementAt(i) != null) {
+					Item item = listModel.elementAt(i);
+					arr.put(item.toJSON().toString());
+				}
+			}
+			try {
+				// Initialize and implement FileWriter in which shall store onto json file
+				FileWriter file = new FileWriter("jsonItems.json", false);
+				arr.write(file);
+				file.close();
+			} catch (Exception eee) {
+				eee.getMessage();
+			}
+			System.exit(0);
 		}
 	};
 
@@ -315,7 +370,7 @@ public class Main extends JFrame {
 		aboutMenuItem.setAction(aboutAction);
 
 		JMenuItem exitMenuItem = new JMenuItem("Exit");
-		exitMenuItem.setActionCommand("Exit");
+		exitMenuItem.addActionListener(quitAction);
 
 		// Item
 		JMenuItem checkMenuItem = new JMenuItem("Check Prices");
