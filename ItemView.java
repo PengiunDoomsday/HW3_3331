@@ -3,10 +3,8 @@ package pricewatcher.base;
 /*
  * Name:Javier Soon
  * Name: Matthew Iglesias
- * Name: Alejandro Villarreal
  * ID: 80436654
  * ID: 80591632
- * ID: 88759517
  * CS 3331
  * 
  */
@@ -18,19 +16,14 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 //import org.json.simple.JSONTokener;
 
@@ -69,7 +62,6 @@ public class ItemView extends JPanel {
      *
      * @param item
      */
-    @SuppressWarnings("OverridableMethodCallInConstructor")
     public ItemView(Item item) {
         this.item = item;
         setPreferredSize(new Dimension(0, 160));
@@ -109,8 +101,8 @@ public class ItemView extends JPanel {
 
             priceChange = 0;
         }
-        DecimalFormat df = new DecimalFormat("0.00");
-        item.setPriceChange(Double.parseDouble(df.format(priceChange)));
+//        DecimalFormat df = new DecimalFormat("0.00");
+//        item.setPriceChange(df.format(priceChange));
 
         super.paintComponent(g);
 
