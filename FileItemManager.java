@@ -1,14 +1,13 @@
 package pricewatcher.base;
 
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
-import org.json.simple.JSONArray;
+import org.json.JSONArray;
+import org.json.JSONTokener;
 
-import com.sun.org.apache.xalan.internal.templates.Constants;
 
-public class FileItemManager {
+
+public class FileItemManager extends Item {
 	private static FileItemManager theinstance;
 	
 	private FileItemManager() {
@@ -16,10 +15,10 @@ public class FileItemManager {
 	}
 	
 	public static FileItemManager getInstance() {
-		if(theInstance == null) {
-			theInstance = new FileItemManager();
+		if(theinstance == null) {
+			theinstance = new FileItemManager();
 		}
-		return theInstance;
+		return theinstance;
 	}
 	
 	public void start() {
