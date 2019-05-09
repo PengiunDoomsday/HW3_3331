@@ -159,7 +159,28 @@ public class Main extends JFrame {
 			JTextField Price = new JTextField();
 			
 			Object[] Jdisplay = {"Name" ,Name , "URL", URL, "Price", Price};
-			
+			int option = JOptionPane.showConfirmDialog (this, message, "Add", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+			if (option == JOptionPane.OK_OPTION) {
+				Item newItem = new Item();
+				newItem.setName(name.getText());
+				newItem.setUrl(url.getText());
+				newItem.setInitialPrice(Double.parseDouble(price.getText()));
+				newItem.setRecentPrice(Double.parseDouble(price.getText()));
+				newItem.setPriceChange(0);
+				newItem.setDateAdded(newItem.getDateAdded());
+				
+				if (newItem.getUrl().contains("bestbuy.com")) newItem.setWebsiteImage("bestbuy.png");
+				else if (newItem.getUrl().contains("walmart.com")) newItem.setWebsiteImage("walmart.png");
+				else if (newItem.getUrl().contains("newegg.com")) newItem.setWebsiteImage("newegg.png");
+				else newItem.setWebsiteImage("missing image.png");
+					
+				itemList.addElement(newItem);
+				itemManager.saveToJSON(itemList);
+				
+				showMessage("Item Successfully added");
+			}	catch (Exception e){
+					showMessage("Please enter information.");
+			}
 			
 			
 			
