@@ -46,23 +46,10 @@ public class Main extends JFrame {
 		super("Price Watcher");
 		setSize(dim);
 
-		// item = new Item();
-		// item.setName("Marvel's Spider-Man - PlayStation 4");
-		// item.setUrl(
-		// "https://www.amazon.com/Marvels-Spider-Man-PlayStation-4/dp/B01GW8YDLK/ref=sr_1_1?ie=UTF8&qid=1549050988&sr=8-1&keywords=spiderman%2Bgame&th=1");
-		// item.setInitialPrice((PriceFinder.priceFinder1()));
-		//
-		// item2 = new Item();
-		// item2.setName("Alphonse Figure");
-		// item2.setUrl(
-		// "https://otakumode.com/shop/596ecc1c47bf74901e1ac932/Nendoroid-Fullmetal-Alchemist-Alphonse-Elric");
-		// item2.setInitialPrice(PriceFinder.priceFinder3());
 
 		// create the model and adds elements
 		listModel = new DefaultListModel<>();
-		// listModel.addElement(item);
-		// listModel.addElement(item2);
-		//
+
 		// // create the list
 		itemList = new JList<>(listModel);
 		// itemList.setVisibleRowCount(2);
@@ -151,49 +138,30 @@ public class Main extends JFrame {
 		@Override
 
 		public void actionPerformed(ActionEvent e) {
-//			final AddDialog dialog = new AddDialog(this, false);
-//			dialog.setSize(250, 120);
-//			dialog.setVisible(true);
-			JTextField Name = new JTextField();
-			JTextField URL = new JTextField();
-			JTextField Price = new JTextField();
-			
-			Object[] Jdisplay = {"Name" ,Name , "URL", URL, "Price", Price};
-			int option = JOptionPane.showConfirmDialog (this, message, "Add", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-			if (option == JOptionPane.OK_OPTION) {
+			final AddDialog dialog = new AddDialog(this, false);
+			dialog.setSize(250, 120);
+			dialog.setVisible(true);
+			dialog.ok.addActionListener(new ActionListener() {  
+			public void actionPerformed(ActionEvent e) {
+				String[] addList = dialog.getAddress();
+				
+				Item item = null;
 				try {
-					Item newItem = new Item();
-					newItem.setName(name.getText());
-					newItem.setUrl(url.getText());
-					newItem.setInitialPrice(Double.parseDouble(price.getText()));
-					newItem.setRecentPrice(Double.parseDouble(price.getText()));
-					newItem.setPriceChange(0);
-					newItem.setDateAdded(newItem.getDateAdded());
-				
-					if (newItem.getUrl().contains("bestbuy.com")) newItem.setWebsiteImage("bestbuy.png");
-					else if (newItem.getUrl().contains("walmart.com")) newItem.setWebsiteImage("walmart.png");
-					else if (newItem.getUrl().contains("newegg.com")) newItem.setWebsiteImage("newegg.png");
-					else newItem.setWebsiteImage("missing image.png");
+					double p =  WebPriceFinder.PriceFinder(addList[1]);
+					System.out.println(p);
 					
-					itemList.addElement(newItem);
-					itemManager.saveToJSON(itemList);
-				
-					showMessage("Item Successfully added");
-				} catch (Exception e) {
-					showMessage("Please enter information.");
+					item = new Item(addList[0], addList[1], p);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
 				}
+				
+				listModel.addElement(item);
+
+				dialog.dispose();
 			}
 			
-			
-			
-			Item item = new Item();
-
-
-			// }
-
-			System.out.println("Adding");
+			 });
 		}
-
 	};
 
 	Action checkAction = new AbstractAction("Check all Prices", checkIcon) {
