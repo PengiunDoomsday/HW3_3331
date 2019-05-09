@@ -3,8 +3,10 @@ package pricewatcher.base;
 /*
  * Name:Javier Soon
  * Name: Matthew Iglesias
+ * Name: Alejandro Villarreal
  * ID: 80436654
  * ID: 80591632
+ * ID: 88759517
  * CS 3331
  * 
  */
