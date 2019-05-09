@@ -9,10 +9,11 @@ import javax.swing.JOptionPane;
 import java.io.*;
 import java.net.*;
 
-public class WebPriceFinder {
+public class WebPriceFinder extends PriceFinder{
 
-	public static void PriceFinder(String url) {
+	public static double PriceFinder(String url) {
 		int check = 0;
+		@SuppressWarnings("unused")
 		double currentPrice = 0;
 		if (url.contains("walmart")) {
 			check = 1;
@@ -26,17 +27,18 @@ public class WebPriceFinder {
 
 		switch (check) {
 		case 1:
-			currentPrice = CheckWalmart(url);
-			break;
+			return currentPrice = CheckWalmart(url);
+
 		case 2:
-			currentPrice = CheckBestbuy(url);
-			break;
+			return currentPrice = CheckBestbuy(url);
+
 		case 3:
-			currentPrice = CheckNewegg(url);
-			break;
+			return currentPrice = CheckNewegg(url);
+			
 		default:
 			System.out.println("invaild url");
 			JOptionPane.showMessageDialog(null, "Invalid URL", "Invalid", JOptionPane.ERROR_MESSAGE);
+			return 0;
 		}
 	}
 
@@ -64,7 +66,7 @@ public class WebPriceFinder {
 
 			while ((line = in.readLine()) != null) {
 				if (line.contains("\"price-group\" role=\"text\" aria-label=")) {
-					// System.out.println("found the price" + line);
+
 					Matcher matcher = pattern.matcher(line);
 					while (matcher.find()) {
 						String price = matcher.group(1);
@@ -107,9 +109,7 @@ public class WebPriceFinder {
 			String line;
 			Pattern pattern = Pattern.compile("\\$(\\d+\\.\\d{2})");
 
-			while ((line = in.readLine()) != null) {
-//				System.out.println(line);
-				
+			while ((line = in.readLine()) != null) {				
 				if (line.contains("priceView-hero-price priceView-customer-price")) {
 
 					Matcher matcher = pattern.matcher(line);
@@ -179,11 +179,4 @@ public class WebPriceFinder {
 		}
 		return currentPrice_v_2;
 	}
-
-	public static void main(String[] args) {
-		String wally = "https://www.newegg.com/Product/Product.aspx?Item=N82E16883165434&cm_sp=Homepage_Dailydeal-_-P1_83-165-434-_-05082019";
-		PriceFinder(wally);
-		System.out.println("hey");
-	}
-
 }
