@@ -10,8 +10,8 @@ import javax.swing.border.*;
 /**
  * A dialog for tracking the price of an item.
  *
- * @author Javier Soon and Matthew Iglesias and LAlejandro Villarreal
- * @ID 80436654 and 80591632 and 88759517
+ * @author Javier Soon and Matthew Iglesias
+ * @ID 80436654 and 80591632
  */
 @SuppressWarnings("serial")
 public class Main extends JFrame {
@@ -232,35 +232,26 @@ public class Main extends JFrame {
 	};
 
 	Action editAction = new AbstractAction("New", editIcon) {
-		if (viewListCell.getSelectedIndex() > -1) {
-		    Product generatedProduct = defaultListModel.get(viewListCell.getSelectedIndex());
-		    JTextField name = new JTextField(generatedProduct.getName());
-		    JTextField url = new JTextField(generatedProduct.getURL()); // (,5)
-		    JTextField initialPrice = new JTextField("" + (generatedProduct.getInitialPrice()));
-		    JTextField currentPrice = new JTextField("" + (generatedProduct.getCurrentPrice()));
-		    JTextField dateAdded = new JTextField(generatedProduct.getDateAdded());
-		    price.setEditable(false);
-		    Object[] message = {
-			"Product Name:", name,
-			"Product URL:", url,
-			"Product Price:", price,
-			"Product Inital Price:", initlaPrice,
-			"Product Current Price:", currentPrice,
-			"Product Date Added:", dateAdded
-		    };
-		    int option = JOptionPane.showConfirmDialog(
-			    this,
-			    message,
-			    "Edit",
-			    JOptionPane.PLAIN_MESSAGE,
-			    0,
-			defaultListModel.get(viewListCell.getSelectedIndex()).setName(name.getText());
-			defaultListModel.get(viewListCell.getSelectedIndex()).setURL(url.getText());
-			setPrice(defaultListModel.get(viewListCell.getSelectedIndex()));
-			defaultListModel.get(viewListCell.getSelectedIndex()).setDateAdded(dateAdded.getText());
-			repaint();
-	          }
-	    }
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (itemList.getSelectedIndex() > -1) {
+			}
+
+			final EditDialog dialog = new EditDialog(this, false);
+			dialog.setSize(250, 120);
+			dialog.setVisible(true);
+
+			Item temp = listModel.getElementAt(itemList.getSelectedIndex());
+
+			// temp.setName(itemList.getName());
+			// temp.setCurrentPrice(PriceFinder.priceFinder1());
+			// temp.setUrl(itemList.getUrl());
+
+			listModel.setElementAt(temp, itemList.getSelectedIndex());
+
+			System.out.println("Edit File");
+		}
+	};
 
 	Action deleteAction = new AbstractAction("New", deleteIcon) {
 		@Override
