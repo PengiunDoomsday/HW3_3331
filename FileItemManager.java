@@ -47,6 +47,13 @@ public class FileItemManager {
 		return item;
 	}
 	
+	public Item change(Item item){
+		item = super.change(item);
+		if(item != null){
+			save();
+		}
+	}
+	
 	protected void save() {
 		try(BufferedWriter write = nre BufferedWriter(new FileWriter(Constants.DATA_FILE))){
 			JSONArray arr = new JSONArray();
