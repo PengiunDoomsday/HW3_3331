@@ -46,7 +46,6 @@ public class Main extends JFrame {
 		super("Price Watcher");
 		setSize(dim);
 
-
 		// create the model and adds elements
 		listModel = new DefaultListModel<>();
 
@@ -141,26 +140,26 @@ public class Main extends JFrame {
 			final AddDialog dialog = new AddDialog(this, false);
 			dialog.setSize(250, 120);
 			dialog.setVisible(true);
-			dialog.ok.addActionListener(new ActionListener() {  
-			public void actionPerformed(ActionEvent e) {
-				String[] addList = dialog.getAddress();
-				
-				Item item = null;
-				try {
-					double p =  WebPriceFinder.PriceFinder(addList[1]);
-					System.out.println(p);
-					
-					item = new Item(addList[0], addList[1], p);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-				}
-				
-				listModel.addElement(item);
+			dialog.ok.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					String[] addList = dialog.getAddress();
 
-				dialog.dispose();
-			}
-			
-			 });
+					Item item = null;
+					try {
+						double p = WebPriceFinder.PriceFinder(addList[1]);
+						System.out.println(p);
+
+						item = new Item(addList[0], addList[1], p);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+					}
+
+					listModel.addElement(item);
+
+					dialog.dispose();
+				}
+
+			});
 		}
 	};
 
@@ -225,42 +224,44 @@ public class Main extends JFrame {
 			} else {
 				System.out.println("Select a item to go to the website");
 			}
-			// } catch(ArrayIndexOutOfBoundsException h) {
-			// System.out.println("Select a item2");
-			// }
 		}
 	};
 
 	Action editAction = new AbstractAction("New", editIcon) {
-		if (viewListCell.getSelectedIndex() > -1) {
-		    Product generatedProduct = defaultListModel.get(viewListCell.getSelectedIndex());
-		    JTextField name = new JTextField(generatedProduct.getName());
-		    JTextField url = new JTextField(generatedProduct.getURL()); // (,5)
-		    JTextField initialPrice = new JTextField("" + (generatedProduct.getInitialPrice()));
-		    JTextField currentPrice = new JTextField("" + (generatedProduct.getCurrentPrice()));
-		    JTextField dateAdded = new JTextField(generatedProduct.getDateAdded());
-		    price.setEditable(false);
-		    Object[] message = {
-			"Product Name:", name,
-			"Product URL:", url,
-			"Product Price:", price,
-			"Product Inital Price:", initlaPrice,
-			"Product Current Price:", currentPrice,
-			"Product Date Added:", dateAdded
-		    };
-		    int option = JOptionPane.showConfirmDialog(
-			    this,
-			    message,
-			    "Edit",
-			    JOptionPane.PLAIN_MESSAGE,
-			    0,
-			defaultListModel.get(viewListCell.getSelectedIndex()).setName(name.getText());
-			defaultListModel.get(viewListCell.getSelectedIndex()).setURL(url.getText());
-			setPrice(defaultListModel.get(viewListCell.getSelectedIndex()));
-			defaultListModel.get(viewListCell.getSelectedIndex()).setDateAdded(dateAdded.getText());
-			repaint();
-	          }
-	    }
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (itemList.getSelectedIndex() > -1) {
+				final EditDialog dialog = new EditDialog(this, false);
+				dialog.setSize(250, 120);
+				dialog.setVisible(true);
+
+				Item temp = listModel.getElementAt(itemList.getSelectedIndex());
+
+				dialog.nameField.setText(listModel.getElementAt(itemList.getSelectedIndex()).getName());
+				dialog.urlField.setText(listModel.getElementAt(itemList.getSelectedIndex()).getUrl());
+				dialog.priceField
+						.setText(String.valueOf(listModel.getElementAt(itemList.getSelectedIndex()).getCurrentPrice()));
+
+				dialog.ok.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+
+						temp.setName(dialog.nameField.getText());
+						temp.setCurrentPrice(WebPriceFinder.PriceFinder(dialog.urlField.getText()));
+						temp.setUrl(dialog.urlField.getText());
+
+						listModel.setElementAt(temp, itemList.getSelectedIndex());
+
+						System.out.println("Edit File");
+						dialog.dispose();
+					}
+				});
+
+			} else {
+				JOptionPane.showMessageDialog(null, "Select an Item", "Invalid", JOptionPane.ERROR_MESSAGE);
+
+			}
+		}
+	};
 
 	Action deleteAction = new AbstractAction("New", deleteIcon) {
 		@Override
