@@ -22,7 +22,14 @@ public class Item {
 		this.currentPrice = currentPrice;
 		this.priceChange = priceChange;
 	}
-
+	
+	public Item(String name, String url, double currentPrice) throws IOException {
+		// contains name, url, current price
+		this.name = name;
+		this.url = url;
+		this.currentPrice = currentPrice;
+	}
+	
 	public Item() {
 		// TODO Auto-generated constructor stub
 	}
